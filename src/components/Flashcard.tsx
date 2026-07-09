@@ -108,7 +108,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, isMastered, onToggle
           colors={[colors.primary, colors.secondary]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
-          style={StyleSheet.absoluteFillObject}
+          style={StyleSheet.absoluteFill}
         />
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <Text style={{ color: colors.textInverse, opacity: 0.7, fontWeight: '800', fontSize: 15 }}>{card.term}</Text>
