@@ -42,8 +42,8 @@ export default function Home() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.background }}
-      contentContainerStyle={{ paddingTop: insets.top + spacing.lg, paddingHorizontal: spacing.lg, paddingBottom: spacing.xxxl }}
+      style={{ flex: 1, backgroundColor: 'transparent' }}
+      contentContainerStyle={{ paddingTop: insets.top + spacing.lg, paddingHorizontal: spacing.lg, paddingBottom: spacing.xxxl + 84 }}
     >
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: spacing.lg }}>
         <View>

@@ -25,9 +25,13 @@ export const palette = {
   black: '#000000',
 };
 
+export type BlurTint = 'light' | 'dark' | 'default';
+
 export interface ThemeColors {
   background: string;
   backgroundElevated: string;
+  /** Top->bottom gradient for the ambient cinematic screen backdrop. */
+  backgroundGradient: [string, string];
   surface: string;
   surfaceAlt: string;
   border: string;
@@ -46,11 +50,17 @@ export interface ThemeColors {
   overlay: string;
   /** Fixed dark gradient pair for "reveal" surfaces (e.g. flashcard backs) that always carries white text. */
   accentGradient: [string, string];
+  /** Glassmorphism surface tokens: translucent tint layered over a BlurView. */
+  glassTint: BlurTint;
+  glassOverlay: string;
+  glassBorder: string;
+  glassHighlight: string;
 }
 
 export const lightColors: ThemeColors = {
   background: palette.slate50,
   backgroundElevated: palette.white,
+  backgroundGradient: [palette.slate50, '#EEF0F5'],
   surface: palette.white,
   surfaceAlt: palette.slate100,
   border: palette.slate200,
@@ -68,11 +78,16 @@ export const lightColors: ThemeColors = {
   warning: palette.orange,
   overlay: 'rgba(15, 23, 42, 0.5)',
   accentGradient: [palette.purple, palette.navyDeep],
+  glassTint: 'light',
+  glassOverlay: 'rgba(255, 255, 255, 0.55)',
+  glassBorder: 'rgba(15, 23, 42, 0.08)',
+  glassHighlight: 'rgba(255, 255, 255, 0.7)',
 };
 
 export const darkColors: ThemeColors = {
-  background: palette.slate900,
-  backgroundElevated: palette.slate900,
+  background: '#07080D',
+  backgroundElevated: '#0B0D14',
+  backgroundGradient: ['#0B0D16', '#050609'],
   surface: palette.slate800,
   surfaceAlt: '#272F42',
   border: '#334155',
@@ -90,4 +105,8 @@ export const darkColors: ThemeColors = {
   warning: '#FB923C',
   overlay: 'rgba(0, 0, 0, 0.6)',
   accentGradient: [palette.purple, palette.navyDeep],
+  glassTint: 'dark',
+  glassOverlay: 'rgba(255, 255, 255, 0.06)',
+  glassBorder: 'rgba(255, 255, 255, 0.10)',
+  glassHighlight: 'rgba(255, 255, 255, 0.14)',
 };

@@ -27,9 +27,9 @@ export default function LibraryHome() {
   }, [search, filter]);
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.background }}>
+    <View style={{ flex: 1, backgroundColor: 'transparent' }}>
       <ScrollView
-        contentContainerStyle={{ paddingTop: insets.top + spacing.lg, paddingHorizontal: spacing.lg, paddingBottom: spacing.xxxl }}
+        contentContainerStyle={{ paddingTop: insets.top + spacing.lg, paddingHorizontal: spacing.lg, paddingBottom: spacing.xxxl + 84 }}
       >
         <Text style={{ fontSize: 26, fontWeight: '800', color: colors.text }}>Chain Library</Text>
         <Text style={{ fontSize: 13, color: colors.textMuted, marginTop: 4, marginBottom: spacing.lg }}>

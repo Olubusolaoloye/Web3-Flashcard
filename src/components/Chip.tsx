@@ -21,7 +21,6 @@ export const Chip: React.FC<ChipProps> = ({ label, active, onPress, color }) => 
         fontWeight: '800',
         color: active ? colors.onPrimary : colors.textMuted,
       }}
-      numberOfLines={1}
     >
       {label}
     </Text>
@@ -35,6 +34,8 @@ export const Chip: React.FC<ChipProps> = ({ label, active, onPress, color }) => 
           paddingVertical: 7,
           borderRadius: radius.full,
           backgroundColor: active ? accent : colors.surfaceAlt,
+          maxWidth: '100%',
+          flexShrink: 1,
         }}
       >
         {content}
@@ -51,6 +52,8 @@ export const Chip: React.FC<ChipProps> = ({ label, active, onPress, color }) => 
         borderRadius: radius.full,
         backgroundColor: active ? accent : colors.surfaceAlt,
         opacity: pressed ? 0.8 : 1,
+        maxWidth: '100%',
+        flexShrink: 1,
       })}
     >
       {content}

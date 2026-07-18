@@ -49,7 +49,7 @@ export default function QuizScreen() {
 
   if (!resolved || resolved.questions.length === 0) {
     return (
-      <View style={{ flex: 1, backgroundColor: colors.background, paddingTop: insets.top }}>
+      <View style={{ flex: 1, backgroundColor: 'transparent', paddingTop: insets.top }}>
         <QuizHeader onClose={() => router.back()} colors={colors} spacing={spacing} />
         <EmptyState icon="🧠" title="No quiz available" message="This deck doesn't have enough cards yet." />
       </View>
@@ -57,7 +57,7 @@ export default function QuizScreen() {
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.background, paddingTop: insets.top }}>
+    <View style={{ flex: 1, backgroundColor: 'transparent', paddingTop: insets.top }}>
       <QuizHeader onClose={() => router.back()} colors={colors} spacing={spacing} />
       <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + spacing.xl }}>
         <QuizRunner

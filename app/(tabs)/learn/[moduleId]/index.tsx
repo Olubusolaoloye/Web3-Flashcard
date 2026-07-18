@@ -22,7 +22,7 @@ export default function ModuleDetail() {
 
   if (!module) {
     return (
-      <View style={{ flex: 1, backgroundColor: colors.background, paddingTop: insets.top }}>
+      <View style={{ flex: 1, backgroundColor: 'transparent', paddingTop: insets.top }}>
         <ScreenHeader title="Module" showBack />
         <EmptyState icon="❓" title="Module not found" />
       </View>
@@ -33,8 +33,8 @@ export default function ModuleDetail() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.background }}
-      contentContainerStyle={{ paddingTop: insets.top + spacing.sm, paddingBottom: spacing.xxxl }}
+      style={{ flex: 1, backgroundColor: 'transparent' }}
+      contentContainerStyle={{ paddingTop: insets.top + spacing.sm, paddingBottom: spacing.xxxl + 84 }}
     >
       <ScreenHeader title={module.title} subtitle={`${done}/${lessons.length} lessons`} showBack />
 

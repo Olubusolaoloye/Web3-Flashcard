@@ -85,16 +85,23 @@ export const ACHIEVEMENTS: Achievement[] = [
   {
     id: "chain-curious",
     title: "Chain Curious",
-    description: "Explore 6 different blockchains in the library.",
+    description: "Explore 10 different blockchains in the library.",
     icon: "🔗",
-    criteria: { type: "chainsExplored", count: 6 },
+    criteria: { type: "chainsExplored", count: 10 },
+  },
+  {
+    id: "chain-scholar",
+    title: "Chain Scholar",
+    description: "Explore 25 different blockchains in the library.",
+    icon: "🧭",
+    criteria: { type: "chainsExplored", count: 25 },
   },
   {
     id: "chain-explorer",
     title: "Chain Explorer",
-    description: "Explore all 12 blockchains in the library.",
+    description: "Explore all 39 blockchains in the library.",
     icon: "🗺️",
-    criteria: { type: "chainsExplored", count: 12 },
+    criteria: { type: "chainsExplored", count: 39 },
   },
   {
     id: "quiz-whiz",

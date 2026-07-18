@@ -14,10 +14,11 @@ export const Card: React.FC<CardProps> = ({ children, onPress, style, padded = t
   const { colors, radius, spacing, shadow } = useTheme();
 
   const base: ViewStyle = {
-    backgroundColor: colors.surface,
+    backgroundColor: colors.glassOverlay,
     borderRadius: radius.xl,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: colors.glassBorder,
+    borderTopColor: colors.glassHighlight,
     padding: padded ? spacing.lg : 0,
     ...(elevated ? shadow.sm : {}),
   };

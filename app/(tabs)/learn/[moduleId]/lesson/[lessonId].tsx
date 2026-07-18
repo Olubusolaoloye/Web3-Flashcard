@@ -26,7 +26,7 @@ export default function LessonScreen() {
 
   if (!module || !lesson) {
     return (
-      <View style={{ flex: 1, backgroundColor: colors.background, paddingTop: insets.top }}>
+      <View style={{ flex: 1, backgroundColor: 'transparent', paddingTop: insets.top }}>
         <ScreenHeader title="Lesson" showBack />
         <EmptyState icon="❓" title="Lesson not found" />
       </View>
@@ -46,8 +46,8 @@ export default function LessonScreen() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.background }}
-      contentContainerStyle={{ paddingTop: insets.top + spacing.sm, paddingBottom: spacing.xxxl, paddingHorizontal: spacing.lg }}
+      style={{ flex: 1, backgroundColor: 'transparent' }}
+      contentContainerStyle={{ paddingTop: insets.top + spacing.sm, paddingBottom: spacing.xxxl + 84, paddingHorizontal: spacing.lg }}
     >
       <ScreenHeader title={module.title} subtitle={`Lesson ${idx + 1} of ${lessons.length}`} showBack />
 

@@ -81,7 +81,11 @@ export type DAppCategory =
   | 'Liquid Staking'
   | 'Yield'
   | 'Perpetuals'
-  | 'Bridge';
+  | 'Bridge'
+  | 'Payments'
+  | 'Stablecoin'
+  | 'Oracle'
+  | 'Launchpad';
 
 export interface DApp {
   name: string;
