@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
+import { AppText as Text } from '../../../../src/components/AppText';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button, Card, EmptyState, ProgressBar, ScreenHeader } from '../../../../src/components';
 import { LESSONS } from '../../../../src/data/lessons';
@@ -86,7 +87,7 @@ export default function ModuleDetail() {
 
         <Button
           title="Take Module Quiz"
-          icon={<Ionicons name="flash" size={16} color={colors.textInverse} />}
+          icon={<Ionicons name="flash" size={16} color={colors.onPrimary} />}
           onPress={() => router.push(`/quiz/quiz-${module.id}`)}
           fullWidth
         />

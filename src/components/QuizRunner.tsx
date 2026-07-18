@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import React, { useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
+import { AppText as Text } from './AppText';
 import { QuizQuestion } from '../types';
 import { useTheme } from '../theme';
 import { Button } from './Button';

@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
+import { AppText as Text } from './AppText';
 import { useTheme } from '../theme';
 
 interface ScreenHeaderProps {

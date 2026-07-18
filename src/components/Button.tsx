@@ -1,5 +1,6 @@
 import React from 'react';
-import { ActivityIndicator, Pressable, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, View, ViewStyle } from 'react-native';
+import { AppText as Text } from './AppText';
 import * as Haptics from 'expo-haptics';
 import { useTheme } from '../theme';
 
@@ -38,7 +39,12 @@ export const Button: React.FC<ButtonProps> = ({
     success: colors.success,
   }[variant];
 
-  const textColor = variant === 'outline' || variant === 'ghost' ? colors.text : colors.textInverse;
+  const textColor =
+    variant === 'outline' || variant === 'ghost'
+      ? colors.text
+      : variant === 'primary' || variant === 'success'
+        ? colors.onPrimary
+        : colors.textInverse;
 
   const borderColor = variant === 'outline' ? colors.border : 'transparent';
 

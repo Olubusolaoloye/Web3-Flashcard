@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useMemo, useState } from 'react';
-import { ScrollView, Text, TextInput, View } from 'react-native';
+import { ScrollView, TextInput, View } from 'react-native';
+import { AppText as Text } from '../../../src/components/AppText';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Card } from '../../../src/components';
 import { GLOSSARY } from '../../../src/data/glossary';
@@ -104,10 +105,10 @@ export default function CardsHome() {
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={{ fontSize: 28, marginRight: spacing.sm }}>🗂️</Text>
                 <View style={{ flex: 1 }}>
-                  <Text style={{ color: colors.textInverse, fontWeight: '800', fontSize: 16 }}>All Terms</Text>
-                  <Text style={{ color: colors.textInverse, opacity: 0.85, fontSize: 12 }}>{GLOSSARY.length} cards · A to Z</Text>
+                  <Text style={{ color: colors.onPrimary, fontWeight: '800', fontSize: 16 }}>All Terms</Text>
+                  <Text style={{ color: colors.onPrimary, opacity: 0.85, fontSize: 12 }}>{GLOSSARY.length} cards · A to Z</Text>
                 </View>
-                <Ionicons name="chevron-forward" size={20} color={colors.textInverse} />
+                <Ionicons name="chevron-forward" size={20} color={colors.onPrimary} />
               </View>
             </Card>
 

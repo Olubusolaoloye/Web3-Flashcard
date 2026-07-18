@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Redirect, useRouter } from 'expo-router';
 import React, { useMemo } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
+import { AppText as Text } from '../../src/components/AppText';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button, Card, ProgressBar, StatPill } from '../../src/components';
 import { MODULES } from '../../src/data/modules';

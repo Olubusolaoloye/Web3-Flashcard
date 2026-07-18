@@ -2,7 +2,8 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { AppText as Text } from './AppText';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -105,7 +106,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, isMastered, onToggle
         ]}
       >
         <LinearGradient
-          colors={[colors.primary, colors.secondary]}
+          colors={colors.accentGradient}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={StyleSheet.absoluteFill}

@@ -1,13 +1,13 @@
 export const palette = {
-  indigo: '#6366F1',
-  indigoDark: '#4F46E5',
-  violet: '#A855F7',
+  gold: '#F59E0B',
+  goldDeep: '#B45309',
+  purple: '#8B5CF6',
+  purpleDeep: '#5B21B6',
+  navyDeep: '#1E1B4B',
   cyan: '#22D3EE',
   emerald: '#10B981',
-  amber: '#F59E0B',
+  orange: '#F97316',
   rose: '#EF4444',
-  pink: '#EC4899',
-  blue: '#3B82F6',
 
   slate50: '#F8FAFC',
   slate100: '#F1F5F9',
@@ -17,7 +17,7 @@ export const palette = {
   slate500: '#64748B',
   slate600: '#475569',
   slate700: '#334155',
-  slate800: '#1E293B',
+  slate800: '#222735',
   slate900: '#0F172A',
   slate950: '#0B1120',
 
@@ -35,6 +35,7 @@ export interface ThemeColors {
   textMuted: string;
   textInverse: string;
   primary: string;
+  onPrimary: string;
   primaryMuted: string;
   secondary: string;
   success: string;
@@ -43,6 +44,8 @@ export interface ThemeColors {
   dangerMuted: string;
   warning: string;
   overlay: string;
+  /** Fixed dark gradient pair for "reveal" surfaces (e.g. flashcard backs) that always carries white text. */
+  accentGradient: [string, string];
 }
 
 export const lightColors: ThemeColors = {
@@ -54,33 +57,37 @@ export const lightColors: ThemeColors = {
   text: palette.slate900,
   textMuted: palette.slate500,
   textInverse: palette.white,
-  primary: palette.indigo,
-  primaryMuted: '#EEF2FF',
-  secondary: palette.violet,
+  primary: palette.gold,
+  onPrimary: palette.slate900,
+  primaryMuted: '#FEF3C7',
+  secondary: palette.purple,
   success: palette.emerald,
   successMuted: '#ECFDF5',
   danger: palette.rose,
   dangerMuted: '#FEF2F2',
-  warning: palette.amber,
+  warning: palette.orange,
   overlay: 'rgba(15, 23, 42, 0.5)',
+  accentGradient: [palette.purple, palette.navyDeep],
 };
 
 export const darkColors: ThemeColors = {
-  background: palette.slate950,
+  background: palette.slate900,
   backgroundElevated: palette.slate900,
   surface: palette.slate800,
-  surfaceAlt: '#16213A',
-  border: '#27324A',
+  surfaceAlt: '#272F42',
+  border: '#334155',
   text: palette.slate50,
   textMuted: palette.slate400,
   textInverse: palette.slate900,
-  primary: '#818CF8',
-  primaryMuted: 'rgba(99, 102, 241, 0.16)',
-  secondary: '#C084FC',
+  primary: palette.gold,
+  onPrimary: palette.slate900,
+  primaryMuted: 'rgba(245, 158, 11, 0.16)',
+  secondary: '#A78BFA',
   success: '#34D399',
   successMuted: 'rgba(16, 185, 129, 0.16)',
   danger: '#F87171',
   dangerMuted: 'rgba(239, 68, 68, 0.16)',
-  warning: '#FBBF24',
+  warning: '#FB923C',
   overlay: 'rgba(0, 0, 0, 0.6)',
+  accentGradient: [palette.purple, palette.navyDeep],
 };

@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
+import { AppText as Text } from '../../../src/components/AppText';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Card, ProgressBar } from '../../../src/components';
 import { MODULES } from '../../../src/data/modules';

@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useMemo, useState } from 'react';
-import { ScrollView, Text, TextInput, View } from 'react-native';
+import { ScrollView, TextInput, View } from 'react-native';
+import { AppText as Text } from '../../../src/components/AppText';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Card, Chip } from '../../../src/components';
 import { BLOCKCHAINS } from '../../../src/data/blockchains';

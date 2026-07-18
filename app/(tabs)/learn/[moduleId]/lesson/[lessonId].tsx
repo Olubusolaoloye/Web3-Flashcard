@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
+import { AppText as Text } from '../../../../../src/components/AppText';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button, Card, EmptyState, ScreenHeader } from '../../../../../src/components';
 import { LESSONS } from '../../../../../src/data/lessons';
@@ -133,7 +134,7 @@ export default function LessonScreen() {
       <Button
         title={completed ? (nextLesson ? 'Next Lesson' : 'Back to Module') : nextLesson ? 'Complete & Continue' : 'Complete Module'}
         onPress={handleContinue}
-        icon={<Ionicons name="arrow-forward" size={16} color={colors.textInverse} />}
+        icon={<Ionicons name="arrow-forward" size={16} color={colors.onPrimary} />}
         fullWidth
       />
     </ScrollView>

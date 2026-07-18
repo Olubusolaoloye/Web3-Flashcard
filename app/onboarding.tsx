@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import React, { useRef, useState } from 'react';
-import { Dimensions, NativeScrollEvent, NativeSyntheticEvent, ScrollView, Text, View } from 'react-native';
+import { Dimensions, NativeScrollEvent, NativeSyntheticEvent, ScrollView, View } from 'react-native';
+import { AppText as Text } from '../src/components/AppText';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button } from '../src/components';
 import { useProgress } from '../src/state/ProgressContext';

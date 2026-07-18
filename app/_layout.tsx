@@ -1,3 +1,12 @@
+import {
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+  Inter_800ExtraBold,
+  Inter_900Black,
+  useFonts,
+} from '@expo-google-fonts/inter';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useCallback, useEffect } from 'react';
@@ -12,18 +21,28 @@ SplashScreen.preventAutoHideAsync().catch(() => {});
 function RootNavigator() {
   const { isLoaded } = useProgress();
   const { scheme, colors } = useTheme();
+  const [fontsLoaded] = useFonts({
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+    Inter_800ExtraBold,
+    Inter_900Black,
+  });
+
+  const ready = isLoaded && fontsLoaded;
 
   const onLayout = useCallback(async () => {
-    if (isLoaded) {
+    if (ready) {
       await SplashScreen.hideAsync().catch(() => {});
     }
-  }, [isLoaded]);
+  }, [ready]);
 
   useEffect(() => {
     onLayout();
   }, [onLayout]);
 
-  if (!isLoaded) return null;
+  if (!ready) return null;
 
   return (
     <>

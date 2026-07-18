@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { Alert, ScrollView, Text, View } from 'react-native';
+import { Alert, ScrollView, View } from 'react-native';
+import { AppText as Text } from '../../../src/components/AppText';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Card, Chip, ProgressBar, StatPill } from '../../../src/components';
 import { ACHIEVEMENTS } from '../../../src/data/achievements';

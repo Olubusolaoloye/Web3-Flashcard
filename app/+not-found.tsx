@@ -1,6 +1,7 @@
 import { Link, Stack } from 'expo-router';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { AppText as Text } from '../src/components/AppText';
 import { useTheme } from '../src/theme';
 
 export default function NotFound() {

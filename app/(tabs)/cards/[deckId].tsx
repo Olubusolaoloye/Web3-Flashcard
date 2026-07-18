@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useMemo, useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
+import { AppText as Text } from '../../../src/components/AppText';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { EmptyState, Flashcard, ScreenHeader } from '../../../src/components';
 import { GLOSSARY } from '../../../src/data/glossary';
@@ -87,7 +88,7 @@ export default function Deck() {
             justifyContent: 'center',
           }}
         >
-          <Ionicons name="flash" size={22} color={colors.textInverse} />
+          <Ionicons name="flash" size={22} color={colors.onPrimary} />
         </Pressable>
         <Pressable
           onPress={goNext}

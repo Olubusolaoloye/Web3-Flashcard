@@ -1,5 +1,6 @@
 import React from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
+import { AppText as Text } from './AppText';
 import { useTheme } from '../theme';
 
 interface ChipProps {
@@ -18,7 +19,7 @@ export const Chip: React.FC<ChipProps> = ({ label, active, onPress, color }) => 
       style={{
         fontSize: 12,
         fontWeight: '800',
-        color: active ? colors.textInverse : colors.textMuted,
+        color: active ? colors.onPrimary : colors.textMuted,
       }}
       numberOfLines={1}
     >
