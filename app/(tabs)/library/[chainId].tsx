@@ -30,7 +30,7 @@ export default function ChainDetail() {
 
   if (!chain) {
     return (
-      <View style={{ flex: 1, backgroundColor: 'transparent', paddingTop: insets.top }}>
+      <View style={{ flex: 1, backgroundColor: colors.background, paddingTop: insets.top }}>
         <ScreenHeader title="Chain" showBack />
         <EmptyState icon="❓" title="Chain not found" />
       </View>
@@ -39,7 +39,7 @@ export default function ChainDetail() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: 'transparent' }}
+      style={{ flex: 1, backgroundColor: colors.background }}
       contentContainerStyle={{ paddingTop: insets.top + spacing.sm, paddingBottom: spacing.xxxl + 84 }}
     >
       <ScreenHeader title={chain.name} showBack />

@@ -32,7 +32,7 @@ export default function Deck() {
 
   if (deck.length === 0) {
     return (
-      <View style={{ flex: 1, backgroundColor: 'transparent', paddingTop: insets.top }}>
+      <View style={{ flex: 1, backgroundColor: colors.background, paddingTop: insets.top }}>
         <ScreenHeader title="Flashcards" showBack />
         <EmptyState icon="🗂️" title="No cards in this deck" />
       </View>
@@ -46,7 +46,7 @@ export default function Deck() {
   const goPrev = () => setIndex((i) => (i - 1 + deck.length) % deck.length);
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'transparent', paddingTop: insets.top }}>
+    <View style={{ flex: 1, backgroundColor: colors.background, paddingTop: insets.top }}>
       <ScreenHeader title={deckTitle} subtitle={`${index + 1} of ${deck.length}`} showBack right={<View style={{ width: 36 }} />} />
 
       <View style={{ flex: 1, paddingHorizontal: spacing.xl, justifyContent: 'center' }}>
