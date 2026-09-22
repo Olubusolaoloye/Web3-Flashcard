@@ -53,7 +53,8 @@
             "backgroundColor": "#12101F"
           }
         }
-      ]
+      ],
+      "./plugins/withPodDeploymentTarget.js"
     ],
     "experiments": {
       "typedRoutes": true
