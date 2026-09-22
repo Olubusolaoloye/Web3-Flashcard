@@ -20,7 +20,7 @@ interface FlashcardProps {
 }
 
 export const Flashcard: React.FC<FlashcardProps> = ({ card, isMastered, onToggleMastered }) => {
-  const { colors, radius, spacing } = useTheme();
+  const { colors, radius, spacing, lift } = useTheme();
   const [isFlipped, setIsFlipped] = useState(false);
   const rotation = useSharedValue(0);
 
@@ -57,12 +57,11 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, isMastered, onToggle
             width: '100%',
             height: '100%',
             backgroundColor: colors.surface,
-            borderRadius: radius.xl,
-            borderWidth: 1,
-            borderColor: colors.border,
+            borderRadius: radius.card,
             padding: spacing.xl,
             justifyContent: 'space-between',
             backfaceVisibility: 'hidden',
+            ...lift('md'),
           },
         ]}
       >
@@ -77,14 +76,14 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, isMastered, onToggle
                 borderRadius: radius.full,
               }}
             >
-              <Text style={{ color: colors.success, fontSize: 10, fontWeight: '800' }}>MASTERED</Text>
+              <Text style={{ color: colors.success, fontSize: 10.5, fontWeight: '800' }}>Mastered</Text>
             </View>
           ) : null}
         </View>
         <View style={{ alignItems: 'center' }}>
           <Text style={{ fontSize: 26, fontWeight: '800', color: colors.text, textAlign: 'center' }}>{card.term}</Text>
-          <Text style={{ marginTop: 8, fontSize: 12, fontWeight: '700', color: colors.textMuted, letterSpacing: 0.4 }}>
-            {card.category.toUpperCase()}
+          <Text style={{ marginTop: 8, fontSize: 12.5, fontWeight: '600', color: colors.textMuted }}>
+            {card.category}
           </Text>
         </View>
         <Text style={{ fontSize: 11, color: colors.textMuted, textAlign: 'center' }}>Tap to reveal definition</Text>
@@ -97,7 +96,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, isMastered, onToggle
             position: 'absolute',
             width: '100%',
             height: '100%',
-            borderRadius: radius.xl,
+            borderRadius: radius.card,
             padding: spacing.xl,
             justifyContent: 'space-between',
             backfaceVisibility: 'hidden',
@@ -112,7 +111,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, isMastered, onToggle
           style={StyleSheet.absoluteFill}
         />
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-          <Text style={{ color: colors.textInverse, opacity: 0.7, fontWeight: '800', fontSize: 15 }}>{card.term}</Text>
+          <Text style={{ color: '#FFFFFF', opacity: 0.7, fontWeight: '800', fontSize: 15 }}>{card.term}</Text>
           {onToggleMastered ? (
             <Pressable
               onPress={(e) => {
@@ -134,19 +133,19 @@ export const Flashcard: React.FC<FlashcardProps> = ({ card, isMastered, onToggle
           ) : null}
         </View>
         <View>
-          <Text style={{ color: colors.textInverse, fontSize: 16, fontWeight: '600', lineHeight: 22, marginBottom: 14 }}>
+          <Text style={{ color: '#FFFFFF', fontSize: 16, fontWeight: '600', lineHeight: 22, marginBottom: 14 }}>
             {card.definition}
           </Text>
           <View style={{ backgroundColor: 'rgba(255,255,255,0.14)', padding: 12, borderRadius: radius.md }}>
-            <Text style={{ color: colors.textInverse, opacity: 0.75, fontSize: 10, fontWeight: '800', marginBottom: 4 }}>
-              EXAMPLE
+            <Text style={{ color: '#FFFFFF', opacity: 0.75, fontSize: 10, fontWeight: '800', marginBottom: 4 }}>
+              Example
             </Text>
-            <Text style={{ color: colors.textInverse, fontSize: 12, fontStyle: 'italic', opacity: 0.95 }}>
+            <Text style={{ color: '#FFFFFF', fontSize: 12, fontStyle: 'italic', opacity: 0.95 }}>
               {card.example}
             </Text>
           </View>
         </View>
-        <Text style={{ fontSize: 11, color: colors.textInverse, opacity: 0.7, textAlign: 'center' }}>Tap to flip back</Text>
+        <Text style={{ fontSize: 11, color: '#FFFFFF', opacity: 0.7, textAlign: 'center' }}>Tap to flip back</Text>
       </Animated.View>
     </Pressable>
   );

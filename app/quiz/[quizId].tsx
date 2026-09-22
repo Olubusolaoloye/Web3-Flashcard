@@ -1,12 +1,10 @@
-import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useMemo, useState } from 'react';
-import { Pressable, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { EmptyState, QuizRunner } from '../../src/components';
-import { GLOSSARY } from '../../src/data/glossary';
-import { MODULES } from '../../src/data/modules';
-import { MODULE_QUIZZES } from '../../src/data/quizzes';
+import { AppText as Text, EmptyState, QuizRunner } from '../../src/components';
+import { IconButton } from '../../src/components/ScreenHeader';
+import { useContent } from '../../src/state/ContentContext';
 import { useProgress } from '../../src/state/ProgressContext';
 import { useTheme } from '../../src/theme';
 import { QuizQuestion } from '../../src/types';
@@ -15,8 +13,9 @@ import { slugify } from '../../src/utils/slug';
 
 export default function QuizScreen() {
   const { quizId } = useLocalSearchParams<{ quizId: string }>();
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, typography } = useTheme();
   const { recordQuizAttempt } = useProgress();
+  const { glossary, modules, quizzes } = useContent();
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const [seed, setSeed] = useState(0);
@@ -25,40 +24,57 @@ export default function QuizScreen() {
     if (!quizId) return null;
 
     if (quizId === 'daily') {
-      return { title: 'Daily Challenge', questions: generateTermQuiz(GLOSSARY, 8, 'daily') };
+      return { title: 'Daily challenge', questions: generateTermQuiz(glossary, 8, 'daily', glossary) };
     }
 
     if (quizId.startsWith('quiz-')) {
       const moduleId = quizId.replace('quiz-', '');
-      const staticQuiz = MODULE_QUIZZES.find((q) => q.id === quizId);
-      const moduleTitle = MODULES.find((m) => m.id === moduleId)?.title ?? 'Module Quiz';
+      const staticQuiz = quizzes.find((q) => q.id === quizId);
+      const moduleTitle = modules.find((m) => m.id === moduleId)?.title ?? 'Module quiz';
       if (staticQuiz) return { title: moduleTitle, questions: staticQuiz.questions as QuizQuestion[] };
       return null;
     }
 
     if (quizId.startsWith('deck-')) {
       const deckId = quizId.replace('deck-', '');
-      const pool = deckId === 'all' ? GLOSSARY : GLOSSARY.filter((t) => slugify(t.category) === deckId);
-      const title = deckId === 'all' ? 'All Terms' : pool[0]?.category ?? 'Deck Quiz';
-      return { title: `${title} Quiz`, questions: generateTermQuiz(pool, 8, 'deck') };
+      const pool = deckId === 'all' ? glossary : glossary.filter((t) => slugify(t.category) === deckId);
+      const title = deckId === 'all' ? 'All terms' : (pool[0]?.category ?? 'Deck');
+      return { title: `${title} quiz`, questions: generateTermQuiz(pool, 8, 'deck', glossary) };
     }
 
     return null;
+    // `seed` deliberately re-rolls the generated questions on retry.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [quizId, seed]);
+  }, [quizId, seed, glossary, modules, quizzes]);
+
+  const header = (
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: spacing.lg,
+        paddingTop: spacing.sm,
+        paddingBottom: spacing.sm,
+      }}
+    >
+      <Text style={{ ...typography.heading, color: colors.text }}>{resolved?.title ?? 'Quiz'}</Text>
+      <IconButton icon="close" onPress={() => router.back()} size={38} accessibilityLabel="Close quiz" />
+    </View>
+  );
 
   if (!resolved || resolved.questions.length === 0) {
     return (
-      <View style={{ flex: 1, backgroundColor: 'transparent', paddingTop: insets.top }}>
-        <QuizHeader onClose={() => router.back()} colors={colors} spacing={spacing} />
+      <View style={{ flex: 1, backgroundColor: colors.background, paddingTop: insets.top }}>
+        {header}
         <EmptyState icon="🧠" title="No quiz available" message="This deck doesn't have enough cards yet." />
       </View>
     );
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'transparent', paddingTop: insets.top }}>
-      <QuizHeader onClose={() => router.back()} colors={colors} spacing={spacing} />
+    <View style={{ flex: 1, backgroundColor: colors.background, paddingTop: insets.top }}>
+      {header}
       <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + spacing.xl }}>
         <QuizRunner
           key={seed}
@@ -69,35 +85,6 @@ export default function QuizScreen() {
           onExit={() => router.back()}
         />
       </ScrollView>
-    </View>
-  );
-}
-
-function QuizHeader({
-  onClose,
-  colors,
-  spacing,
-}: {
-  onClose: () => void;
-  colors: ReturnType<typeof useTheme>['colors'];
-  spacing: ReturnType<typeof useTheme>['spacing'];
-}) {
-  return (
-    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: spacing.lg, paddingTop: spacing.sm }}>
-      <Pressable
-        onPress={onClose}
-        hitSlop={12}
-        style={{
-          width: 36,
-          height: 36,
-          borderRadius: 18,
-          backgroundColor: colors.surfaceAlt,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Ionicons name="close" size={20} color={colors.text} />
-      </Pressable>
     </View>
   );
 }

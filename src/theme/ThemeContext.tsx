@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useMemo } from 'react';
-import { useColorScheme } from 'react-native';
+import { useColorScheme, ViewStyle } from 'react-native';
 import { darkColors, lightColors, ThemeColors } from './colors';
 import { radius, shadow, spacing, typography } from './spacing';
 import { useProgress } from '../state/ProgressContext';
@@ -11,6 +11,9 @@ interface ThemeValue {
   radius: typeof radius;
   typography: typeof typography;
   shadow: typeof shadow;
+  /** Raised-surface styling: a soft shadow in light mode, a hairline border in dark mode
+   * (where a shadow is invisible). Use for every card-like container. */
+  lift: (level?: 'sm' | 'md' | 'lg') => ViewStyle;
 }
 
 const ThemeContext = createContext<ThemeValue | null>(null);
@@ -26,17 +29,21 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return progress.darkModeOverride;
   }, [progress.darkModeOverride, systemScheme]);
 
-  const value = useMemo<ThemeValue>(
-    () => ({
+  const value = useMemo<ThemeValue>(() => {
+    const colors = scheme === 'dark' ? darkColors : lightColors;
+    return {
       scheme,
-      colors: scheme === 'dark' ? darkColors : lightColors,
+      colors,
       spacing,
       radius,
       typography,
       shadow,
-    }),
-    [scheme]
-  );
+      lift: (level = 'sm') =>
+        colors.cardBordered
+          ? { borderWidth: 1, borderColor: colors.cardBorder }
+          : { ...shadow[level] },
+    };
+  }, [scheme]);
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };

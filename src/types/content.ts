@@ -128,3 +128,18 @@ export interface Achievement {
   icon: string; // single emoji
   criteria: AchievementCriteria;
 }
+
+/** An admin-managed, time-limited promo card shown in the Home carousel — a coin,
+ * dApp, event, or anything else worth a short-lived spotlight slot. Expires on its
+ * own once `expiresAt` passes; the admin sets how long it runs via `durationHours`. */
+export interface AlphaSpotlight {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  link: string;
+  category: string; // free text, e.g. "Coin", "Dapp", "Event"
+  durationHours: number;
+  expiresAt: string; // ISO timestamp, server-computed from durationHours
+  createdAt: string; // ISO timestamp
+}

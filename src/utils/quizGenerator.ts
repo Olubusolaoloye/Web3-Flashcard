@@ -1,4 +1,3 @@
-import { GLOSSARY } from '../data/glossary';
 import { GlossaryTerm, QuizQuestion } from '../types';
 
 function shuffle<T>(arr: T[]): T[] {
@@ -6,12 +5,17 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 /** Builds a fresh quiz from a glossary term pool: given the definition, pick the matching term.
- * Distractor options are always drawn from the full glossary so there are enough to choose from
- * even when quizzing a small deck. */
-export function generateTermQuiz(pool: GlossaryTerm[], count = 8, idPrefix = 'quiz'): QuizQuestion[] {
+ * Distractor options are drawn from `fullGlossary` (defaulting to `pool`) so there are enough to
+ * choose from even when quizzing a small deck. */
+export function generateTermQuiz(
+  pool: GlossaryTerm[],
+  count = 8,
+  idPrefix = 'quiz',
+  fullGlossary: GlossaryTerm[] = pool
+): QuizQuestion[] {
   const questionCards = shuffle(pool).slice(0, Math.min(count, pool.length));
   return questionCards.map((card, idx) => {
-    const distractors = shuffle(GLOSSARY.filter((c) => c.id !== card.id))
+    const distractors = shuffle(fullGlossary.filter((c) => c.id !== card.id))
       .slice(0, 3)
       .map((c) => c.term);
     const options = shuffle([...distractors, card.term]);
@@ -24,8 +28,4 @@ export function generateTermQuiz(pool: GlossaryTerm[], count = 8, idPrefix = 'qu
       explanation: `${card.term} — ${card.example}`,
     };
   });
-}
-
-export function generateGlossaryQuiz(count = 8): QuizQuestion[] {
-  return generateTermQuiz(GLOSSARY, count, 'daily');
 }

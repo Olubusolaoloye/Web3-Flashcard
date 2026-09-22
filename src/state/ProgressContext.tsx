@@ -1,17 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { DEFAULT_PROGRESS, ProgressState, QuizAttempt } from '../types';
-import { ACHIEVEMENTS } from '../data/achievements';
-import { LESSONS } from '../data/lessons';
-import { MODULES } from '../data/modules';
 import { countCompletedModules, evaluateAchievements, touchStreak, XP } from '../utils/gamification';
+import { useContent } from './ContentContext';
 
 const STORAGE_KEY = 'web3academy.progress.v1';
-
-const LESSON_IDS_BY_MODULE: Record<string, string[]> = MODULES.reduce((acc, m) => {
-  acc[m.id] = LESSONS.filter((l) => l.moduleId === m.id).map((l) => l.id);
-  return acc;
-}, {} as Record<string, string[]>);
 
 interface ProgressContextValue {
   progress: ProgressState;
@@ -33,10 +26,20 @@ interface ProgressContextValue {
 const ProgressContext = createContext<ProgressContextValue | null>(null);
 
 export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { modules, lessons, achievements } = useContent();
   const [progress, setProgress] = useState<ProgressState>(DEFAULT_PROGRESS);
   const [isLoaded, setIsLoaded] = useState(false);
   const [newlyUnlocked, setNewlyUnlocked] = useState<string[]>([]);
   const hydrated = useRef(false);
+
+  const lessonIdsByModule = useMemo<Record<string, string[]>>(
+    () =>
+      modules.reduce((acc, m) => {
+        acc[m.id] = lessons.filter((l) => l.moduleId === m.id).map((l) => l.id);
+        return acc;
+      }, {} as Record<string, string[]>),
+    [modules, lessons]
+  );
 
   useEffect(() => {
     (async () => {
@@ -60,18 +63,21 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(progress)).catch(() => {});
   }, [progress]);
 
-  const applyUpdate = useCallback((updater: (prev: ProgressState) => ProgressState) => {
-    setProgress((prev) => {
-      const withStreak = { ...prev, ...touchStreak(prev) };
-      const next = updater(withStreak);
-      const earned = evaluateAchievements(next, ACHIEVEMENTS, LESSON_IDS_BY_MODULE);
-      const freshlyEarned = earned.filter((id) => !next.unlockedAchievementIds.includes(id));
-      if (freshlyEarned.length > 0) {
-        setNewlyUnlocked((cur) => [...cur, ...freshlyEarned]);
-      }
-      return { ...next, unlockedAchievementIds: earned };
-    });
-  }, []);
+  const applyUpdate = useCallback(
+    (updater: (prev: ProgressState) => ProgressState) => {
+      setProgress((prev) => {
+        const withStreak = { ...prev, ...touchStreak(prev) };
+        const next = updater(withStreak);
+        const earned = evaluateAchievements(next, achievements, lessonIdsByModule);
+        const freshlyEarned = earned.filter((id) => !next.unlockedAchievementIds.includes(id));
+        if (freshlyEarned.length > 0) {
+          setNewlyUnlocked((cur) => [...cur, ...freshlyEarned]);
+        }
+        return { ...next, unlockedAchievementIds: earned };
+      });
+    },
+    [achievements, lessonIdsByModule]
+  );
 
   const completeOnboarding = useCallback(() => {
     applyUpdate((prev) => ({ ...prev, hasOnboarded: true }));
@@ -142,7 +148,10 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const clearNewlyUnlocked = useCallback(() => setNewlyUnlocked([]), []);
 
-  const completedModulesCount = useMemo(() => countCompletedModules(progress, LESSON_IDS_BY_MODULE), [progress]);
+  const completedModulesCount = useMemo(
+    () => countCompletedModules(progress, lessonIdsByModule),
+    [progress, lessonIdsByModule]
+  );
 
   const value = useMemo<ProgressContextValue>(
     () => ({
@@ -159,7 +168,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       setDarkModeOverride,
       resetProgress,
       completedModulesCount,
-      lessonIdsByModule: LESSON_IDS_BY_MODULE,
+      lessonIdsByModule,
     }),
     [
       progress,
@@ -175,6 +184,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       setDarkModeOverride,
       resetProgress,
       completedModulesCount,
+      lessonIdsByModule,
     ]
   );
 

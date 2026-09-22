@@ -13,26 +13,24 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
-import { AmbientBackground } from '../src/components/AmbientBackground';
+import { ContentProvider, useContent } from '../src/state/ContentContext';
 import { ProgressProvider, useProgress } from '../src/state/ProgressContext';
 import { ThemeProvider, useTheme } from '../src/theme';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
 function RootNavigator() {
-  const { isLoaded } = useProgress();
+  const { isLoaded: progressLoaded } = useProgress();
+  const { isLoaded: contentLoaded } = useContent();
   const { scheme, colors } = useTheme();
 
-  // React Navigation's own theme otherwise paints an opaque default background behind every
-  // screen/tab scene, hiding the AmbientBackground blur layer mounted below. Overriding it with
-  // a fully transparent background lets that layer show through everywhere.
   const navTheme = useMemo(
     () => ({
       dark: scheme === 'dark',
       colors: {
         primary: colors.primary,
-        background: 'transparent',
-        card: 'transparent',
+        background: colors.background,
+        card: colors.surface,
         text: colors.text,
         border: colors.border,
         notification: colors.danger,
@@ -56,7 +54,7 @@ function RootNavigator() {
     Inter_900Black,
   });
 
-  const ready = isLoaded && fontsLoaded;
+  const ready = progressLoaded && contentLoaded && fontsLoaded;
 
   const onLayout = useCallback(async () => {
     if (ready) {
@@ -73,14 +71,15 @@ function RootNavigator() {
   return (
     <NavigationThemeProvider value={navTheme}>
       <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
-      <AmbientBackground />
-      <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: 'transparent' } }}>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          contentStyle: { backgroundColor: colors.background },
+        }}
+      >
         <Stack.Screen name="onboarding" options={{ animation: 'fade' }} />
         <Stack.Screen name="(tabs)" />
-        <Stack.Screen
-          name="quiz/[quizId]"
-          options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
-        />
+        <Stack.Screen name="quiz/[quizId]" options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
       </Stack>
     </NavigationThemeProvider>
   );
@@ -90,11 +89,13 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <ProgressProvider>
-          <ThemeProvider>
-            <RootNavigator />
-          </ThemeProvider>
-        </ProgressProvider>
+        <ContentProvider>
+          <ProgressProvider>
+            <ThemeProvider>
+              <RootNavigator />
+            </ThemeProvider>
+          </ProgressProvider>
+        </ContentProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

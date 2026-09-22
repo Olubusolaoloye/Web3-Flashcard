@@ -1,10 +1,10 @@
+import * as Haptics from 'expo-haptics';
 import React from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, View, ViewStyle } from 'react-native';
-import { AppText as Text } from './AppText';
-import * as Haptics from 'expo-haptics';
 import { useTheme } from '../theme';
+import { AppText as Text } from './AppText';
 
-type Variant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'success';
+type Variant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'success' | 'soft';
 
 interface ButtonProps {
   title: string;
@@ -13,8 +13,10 @@ interface ButtonProps {
   disabled?: boolean;
   loading?: boolean;
   icon?: React.ReactNode;
+  /** Renders after the label instead of before it. */
+  iconRight?: React.ReactNode;
   fullWidth?: boolean;
-  size?: 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   style?: ViewStyle;
 }
 
@@ -25,11 +27,12 @@ export const Button: React.FC<ButtonProps> = ({
   disabled,
   loading,
   icon,
+  iconRight,
   fullWidth,
   size = 'lg',
   style,
 }) => {
-  const { colors, radius } = useTheme();
+  const { colors, radius, shadow } = useTheme();
 
   const backgroundColor = {
     primary: colors.primary,
@@ -37,16 +40,20 @@ export const Button: React.FC<ButtonProps> = ({
     outline: 'transparent',
     ghost: 'transparent',
     success: colors.success,
+    soft: colors.primaryMuted,
   }[variant];
 
-  const textColor =
-    variant === 'outline' || variant === 'ghost'
-      ? colors.text
-      : variant === 'primary' || variant === 'success'
-        ? colors.onPrimary
-        : colors.textInverse;
+  const textColor = {
+    primary: colors.onPrimary,
+    secondary: colors.textInverse,
+    outline: colors.text,
+    ghost: colors.primary,
+    success: colors.onPrimary,
+    soft: colors.primary,
+  }[variant];
 
-  const borderColor = variant === 'outline' ? colors.border : 'transparent';
+  const paddingVertical = size === 'lg' ? 17 : size === 'md' ? 13 : 10;
+  const fontSize = size === 'lg' ? 15 : size === 'md' ? 14 : 13;
 
   const handlePress = () => {
     if (disabled || loading) return;
@@ -62,31 +69,25 @@ export const Button: React.FC<ButtonProps> = ({
         styles.base,
         {
           backgroundColor,
-          borderColor,
+          borderColor: variant === 'outline' ? colors.border : 'transparent',
           borderWidth: variant === 'outline' ? 1.5 : 0,
-          borderRadius: radius.lg,
-          opacity: disabled ? 0.5 : pressed ? 0.85 : 1,
+          borderRadius: radius.full,
+          opacity: disabled ? 0.45 : pressed ? 0.9 : 1,
           transform: [{ scale: pressed ? 0.98 : 1 }],
           width: fullWidth ? '100%' : undefined,
-          paddingVertical: size === 'lg' ? 16 : 12,
+          paddingVertical,
         },
+        variant === 'primary' && !disabled ? shadow.primary : null,
         style,
       ]}
     >
       {loading ? (
-        <ActivityIndicator color={textColor} />
+        <ActivityIndicator color={textColor} size="small" />
       ) : (
         <View style={styles.content}>
-          {icon}
-          <Text
-            style={[
-              styles.text,
-              { color: textColor, fontSize: size === 'lg' ? 15 : 13 },
-              icon ? { marginLeft: 8 } : null,
-            ]}
-          >
-            {title}
-          </Text>
+          {icon ? <View style={{ marginRight: 8 }}>{icon}</View> : null}
+          <Text style={[styles.text, { color: textColor, fontSize }]}>{title}</Text>
+          {iconRight ? <View style={{ marginLeft: 8 }}>{iconRight}</View> : null}
         </View>
       )}
     </Pressable>
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
   base: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
   },
   content: {
     flexDirection: 'row',
@@ -105,8 +106,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    fontWeight: '800',
-    textTransform: 'uppercase',
-    letterSpacing: 0.6,
+    fontWeight: '700',
+    letterSpacing: -0.1,
   },
 });

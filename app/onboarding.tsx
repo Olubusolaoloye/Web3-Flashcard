@@ -1,43 +1,42 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useRef, useState } from 'react';
-import { Dimensions, NativeScrollEvent, NativeSyntheticEvent, ScrollView, View } from 'react-native';
-import { AppText as Text } from '../src/components/AppText';
+import { NativeScrollEvent, NativeSyntheticEvent, Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Button } from '../src/components';
+import { AppText as Text, Button, IconTile, LogoSlot } from '../src/components';
 import { useProgress } from '../src/state/ProgressContext';
 import { useTheme } from '../src/theme';
 
-const { width } = Dimensions.get('window');
-
-const SLIDES = [
+const SLIDES: { icon: keyof typeof Ionicons.glyphMap; title: string; body: string }[] = [
   {
-    icon: '🌐',
+    icon: 'school',
     title: 'Learn Web3, one bite at a time',
-    body: 'Bite-sized lessons take you from total beginner to confidently fluent in blockchain, DeFi, and NFTs.',
+    body: 'Short lessons take you from total beginner to confidently fluent in blockchain, DeFi, and NFTs.',
   },
   {
-    icon: '🃏',
+    icon: 'albums',
     title: 'Flashcards that stick',
-    body: 'Flip through a growing glossary of terms, mark what you’ve mastered, and quiz yourself to lock it in.',
+    body: 'Flip through a growing glossary, mark what you’ve mastered, and quiz yourself to lock it in.',
   },
   {
-    icon: '🏆',
+    icon: 'trophy',
     title: 'Track streaks & earn badges',
     body: 'Build a daily streak, level up, and unlock achievements as you explore chains and ace quizzes.',
   },
 ];
 
 export default function Onboarding() {
-  const { colors, spacing } = useTheme();
+  const { colors, spacing, typography } = useTheme();
   const { completeOnboarding } = useProgress();
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const [page, setPage] = useState(0);
+  const [width, setWidth] = useState(0);
   const scrollRef = useRef<ScrollView>(null);
 
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const p = Math.round(e.nativeEvent.contentOffset.x / width);
-    setPage(p);
+    if (width <= 0) return;
+    setPage(Math.round(e.nativeEvent.contentOffset.x / width));
   };
 
   const finish = () => {
@@ -46,7 +45,7 @@ export default function Onboarding() {
   };
 
   const next = () => {
-    if (page < SLIDES.length - 1) {
+    if (page < SLIDES.length - 1 && width > 0) {
       scrollRef.current?.scrollTo({ x: (page + 1) * width, animated: true });
     } else {
       finish();
@@ -54,61 +53,65 @@ export default function Onboarding() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'transparent' }}>
-      <ScrollView
-        ref={scrollRef}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onScroll={onScroll}
-        scrollEventThrottle={16}
-        style={{ flex: 1 }}
-      >
-        {SLIDES.map((slide, idx) => (
-          <View key={idx} style={{ width, paddingTop: insets.top + spacing.xxxl, paddingHorizontal: spacing.xxl, alignItems: 'center' }}>
+    <View style={{ flex: 1, backgroundColor: colors.background }} onLayout={(e) => setWidth(e.nativeEvent.layout.width)}>
+      <View style={{ alignItems: 'center', paddingTop: insets.top + spacing.xl }}>
+        <LogoSlot variant="full" height={44} />
+      </View>
+
+      {width > 0 ? (
+        <ScrollView
+          ref={scrollRef}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onScroll={onScroll}
+          scrollEventThrottle={16}
+          style={{ flex: 1 }}
+        >
+          {SLIDES.map((slide, idx) => (
             <View
+              key={slide.title}
               style={{
-                width: 120,
-                height: 120,
-                borderRadius: 60,
-                backgroundColor: colors.primaryMuted,
+                width,
+                paddingHorizontal: spacing.xxl,
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginBottom: spacing.xxl,
               }}
             >
-              <Text style={{ fontSize: 56 }}>{slide.icon}</Text>
+              <IconTile icon={slide.icon} variant={idx} size={132} style={{ marginBottom: spacing.xxl }} />
+              <Text style={{ ...typography.display, color: colors.text, textAlign: 'center', marginBottom: spacing.sm }}>
+                {slide.title}
+              </Text>
+              <Text style={{ fontSize: 15, color: colors.textMuted, textAlign: 'center', lineHeight: 23 }}>
+                {slide.body}
+              </Text>
             </View>
-            <Text style={{ fontSize: 26, fontWeight: '800', color: colors.text, textAlign: 'center', marginBottom: spacing.md }}>
-              {slide.title}
-            </Text>
-            <Text style={{ fontSize: 15, color: colors.textMuted, textAlign: 'center', lineHeight: 22 }}>{slide.body}</Text>
-          </View>
-        ))}
-      </ScrollView>
+          ))}
+        </ScrollView>
+      ) : (
+        <View style={{ flex: 1 }} />
+      )}
 
       <View style={{ paddingHorizontal: spacing.xxl, paddingBottom: insets.bottom + spacing.lg }}>
         <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: spacing.xl }}>
-          {SLIDES.map((_, idx) => (
+          {SLIDES.map((slide, idx) => (
             <View
-              key={idx}
+              key={slide.title}
               style={{
-                width: idx === page ? 20 : 8,
-                height: 8,
-                borderRadius: 4,
+                width: idx === page ? 22 : 7,
+                height: 7,
+                borderRadius: 3.5,
                 backgroundColor: idx === page ? colors.primary : colors.border,
-                marginHorizontal: 4,
+                marginHorizontal: 3.5,
               }}
             />
           ))}
         </View>
-        <Button title={page === SLIDES.length - 1 ? 'Get Started' : 'Next'} onPress={next} fullWidth />
+        <Button title={page === SLIDES.length - 1 ? 'Get started' : 'Next'} onPress={next} fullWidth />
         {page < SLIDES.length - 1 ? (
-          <View style={{ marginTop: spacing.sm, alignItems: 'center' }}>
-            <Text onPress={finish} style={{ color: colors.textMuted, fontSize: 13, fontWeight: '700', padding: 8 }}>
-              Skip
-            </Text>
-          </View>
+          <Pressable onPress={finish} style={{ marginTop: spacing.sm, alignItems: 'center', padding: 8 }}>
+            <Text style={{ color: colors.textMuted, fontSize: 13.5, fontWeight: '700' }}>Skip</Text>
+          </Pressable>
         ) : null}
       </View>
     </View>

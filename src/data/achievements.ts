@@ -99,9 +99,9 @@ export const ACHIEVEMENTS: Achievement[] = [
   {
     id: "chain-explorer",
     title: "Chain Explorer",
-    description: "Explore all 39 blockchains in the library.",
+    description: "Explore all 43 blockchains in the library.",
     icon: "🗺️",
-    criteria: { type: "chainsExplored", count: 39 },
+    criteria: { type: "chainsExplored", count: 43 },
   },
   {
     id: "quiz-whiz",

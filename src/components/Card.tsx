@@ -8,26 +8,36 @@ interface CardProps {
   style?: ViewStyle;
   padded?: boolean;
   elevated?: boolean;
+  /** 'sm' for list rows, 'md' for feature cards. */
+  level?: 'sm' | 'md' | 'lg';
 }
 
-export const Card: React.FC<CardProps> = ({ children, onPress, style, padded = true, elevated = true }) => {
-  const { colors, radius, spacing, shadow } = useTheme();
+export const Card: React.FC<CardProps> = ({
+  children,
+  onPress,
+  style,
+  padded = true,
+  elevated = true,
+  level = 'sm',
+}) => {
+  const { colors, radius, spacing, lift } = useTheme();
 
   const base: ViewStyle = {
-    backgroundColor: colors.glassOverlay,
-    borderRadius: radius.xl,
-    borderWidth: 1,
-    borderColor: colors.glassBorder,
-    borderTopColor: colors.glassHighlight,
+    backgroundColor: colors.surface,
+    borderRadius: radius.card,
     padding: padded ? spacing.lg : 0,
-    ...(elevated ? shadow.sm : {}),
+    ...(elevated ? lift(level) : {}),
   };
 
   if (onPress) {
     return (
       <Pressable
         onPress={onPress}
-        style={({ pressed }) => [base, style, { opacity: pressed ? 0.92 : 1, transform: [{ scale: pressed ? 0.99 : 1 }] }]}
+        style={({ pressed }) => [
+          base,
+          style,
+          { opacity: pressed ? 0.94 : 1, transform: [{ scale: pressed ? 0.985 : 1 }] },
+        ]}
       >
         {children}
       </Pressable>

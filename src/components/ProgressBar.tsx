@@ -11,7 +11,7 @@ interface ProgressBarProps {
   style?: ViewStyle;
 }
 
-export const ProgressBar: React.FC<ProgressBarProps> = ({ fraction, height = 10, color, trackColor, style }) => {
+export const ProgressBar: React.FC<ProgressBarProps> = ({ fraction, height = 8, color, trackColor, style }) => {
   const { colors, radius } = useTheme();
   const clamped = Math.max(0, Math.min(1, fraction));
   const width = useSharedValue(0);

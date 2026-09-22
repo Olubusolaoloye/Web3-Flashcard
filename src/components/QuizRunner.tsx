@@ -78,10 +78,10 @@ export const QuizRunner: React.FC<QuizRunnerProps> = ({ title, questions, onComp
   return (
     <View style={{ padding: spacing.lg }}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: spacing.sm }}>
-        <Text style={{ fontSize: 11, fontWeight: '800', color: colors.textMuted, letterSpacing: 0.4 }}>
-          {title.toUpperCase()} · {index + 1}/{questions.length}
+        <Text style={{ fontSize: 12, fontWeight: '700', color: colors.textMuted, letterSpacing: -0.1 }}>
+          Question {index + 1} of {questions.length}
         </Text>
-        <Text style={{ fontSize: 11, fontWeight: '800', color: colors.primary, letterSpacing: 0.4 }}>SCORE {score}</Text>
+        <Text style={{ fontSize: 12, fontWeight: '700', color: colors.primary, letterSpacing: -0.1 }}>Score {score}</Text>
       </View>
       <ProgressBar fraction={(index + 1) / questions.length} style={{ marginBottom: spacing.lg }} />
 
@@ -116,7 +116,7 @@ export const QuizRunner: React.FC<QuizRunnerProps> = ({ title, questions, onComp
               onPress={() => handleAnswer(idx)}
               style={{
                 padding: spacing.md,
-                borderRadius: radius.lg,
+                borderRadius: radius.md,
                 backgroundColor: bg,
                 borderWidth: 2,
                 borderColor,

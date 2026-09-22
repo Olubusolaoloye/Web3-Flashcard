@@ -1,5 +1,5 @@
 // Blockchain library for Web3 Academy.
-// 39 major, currently-active networks, each with tagline/overview/strengths/useCases/dApps.
+// 43 major, currently-active networks, each with tagline/overview/strengths/useCases/dApps.
 
 import { Blockchain } from "../types/content";
 
@@ -1117,6 +1117,90 @@ export const BLOCKCHAINS: Blockchain[] = [
       { name: "Morpho", category: "Lending", use: "Peer-to-peer optimized lending markets on World Chain", explanation: "Morpho is one of the largest lending protocols on World Chain, with a dedicated frontend offering World ID-gated borrow limits.", link: "https://www.morpho.org" },
       { name: "Uniswap", category: "DEX", use: "Swap tokens on World Chain", explanation: "Uniswap deployed on World Chain shortly after launch, giving the network's growing verified-user base a familiar, deep-liquidity trading venue.", link: "https://uniswap.org" },
       { name: "Bungee", category: "Bridge", use: "Gasless cross-chain swaps and bridging into World Chain", explanation: "Bungee aggregates bridges and DEXs to move assets into World Chain from other networks, often letting users bridge without holding gas on the source chain first.", link: "https://www.bungee.exchange" },
+    ],
+  },
+  {
+    id: "robinhood-chain",
+    name: "Robinhood Chain",
+    logo: "🪶",
+    tagline: "A brokerage-built L2 for tokenized real-world assets.",
+    overview:
+      "Robinhood Chain is an Ethereum Layer 2 that Robinhood is building on Arbitrum Orbit technology, announced in 2025 as the settlement layer for its tokenized stock and real-world-asset ambitions. The design goal is to let equities, ETFs and other regulated instruments trade as on-chain tokens with round-the-clock settlement, while keeping the compliance controls a licensed broker needs. Because it is an Orbit chain it settles to Ethereum through Arbitrum's stack and inherits EVM tooling, so existing Solidity contracts and wallets work without changes.",
+    chainType: "Layer 2",
+    consensus: "Optimistic Rollup (Arbitrum Orbit), secured by Ethereum",
+    nativeToken: "ETH",
+    launched: 2025,
+    strengths: ["Backed by a large regulated brokerage", "Purpose-built for tokenized real-world assets", "Full EVM compatibility via Arbitrum Orbit", "Designed for 24/7 settlement", "Compliance controls built into the chain design"],
+    useCases: ["Tokenized stocks and ETFs", "Real-world asset settlement", "Round-the-clock trading", "Regulated on-chain finance"],
+    dApps: [
+      { name: "Robinhood", category: "Infrastructure", use: "Brokerage app issuing and settling tokenized assets", explanation: "Robinhood is the brokerage behind the chain, using it to settle tokenized stocks and other real-world assets for its users.", link: "https://robinhood.com" },
+      { name: "Arbitrum Orbit", category: "Infrastructure", use: "The rollup framework the chain is built on", explanation: "Arbitrum Orbit lets teams launch their own chain that settles to Ethereum through Arbitrum's proven rollup stack.", link: "https://arbitrum.io/orbit" },
+      { name: "Chainlink", category: "Oracle", use: "Price feeds and proof-of-reserve for tokenized assets", explanation: "Chainlink supplies the off-chain market data and reserve attestations that tokenized equities need to stay honestly priced and backed.", link: "https://chain.link" },
+      { name: "Arbitrum Bridge", category: "Bridge", use: "Move assets between Ethereum and Orbit chains", explanation: "The Arbitrum bridge is the canonical route for deposits and withdrawals on chains built with the Orbit stack.", link: "https://bridge.arbitrum.io" },
+      { name: "MetaMask", category: "Wallets", use: "Hold and sign transactions on the network", explanation: "Because the chain is EVM-compatible, standard wallets like MetaMask can connect by adding the network's RPC details.", link: "https://metamask.io" },
+    ],
+  },
+  {
+    id: "ink",
+    name: "Ink",
+    logo: "🖋️",
+    tagline: "Kraken's OP Stack L2 built as a DeFi home base.",
+    overview:
+      "Ink is an Ethereum Layer 2 launched by the crypto exchange Kraken in December 2024, built on the OP Stack and part of the Optimism Superchain. It is positioned as a DeFi-first chain with deep integration into Kraken's exchange, so users can move funds between their exchange balance and on-chain positions with unusually little friction. Ink shipped its own INK token and an Ink Foundation to steward the ecosystem, and it uses the Superchain's shared standards for interoperability with other OP Stack chains.",
+    chainType: "Layer 2",
+    consensus: "Optimistic Rollup (OP Stack), secured by Ethereum",
+    nativeToken: "ETH",
+    launched: 2024,
+    strengths: ["Direct Kraken exchange integration", "OP Stack/Superchain interoperability", "Low fees for DeFi activity", "Full EVM compatibility", "Dedicated ecosystem funding via the Ink Foundation"],
+    useCases: ["DeFi trading and lending", "Exchange-to-chain onboarding", "Cross-chain Superchain apps", "General EVM dApp deployment"],
+    dApps: [
+      { name: "Kraken", category: "Infrastructure", use: "Fiat and exchange on-ramp straight into the chain", explanation: "Kraken built Ink and wires its exchange directly into the chain, making it the simplest path from fiat to on-chain funds here.", link: "https://www.kraken.com" },
+      { name: "Aave", category: "Lending", use: "Borrow and lend major crypto assets", explanation: "Aave is one of DeFi's largest lending markets and is deployed on Ink, letting users earn on deposits or borrow against them.", link: "https://aave.com" },
+      { name: "Velodrome", category: "DEX", use: "Trade tokens and direct liquidity incentives by voting", explanation: "Velodrome is the Superchain's flagship vote-escrow DEX, using token votes to route emissions toward the pools a chain most needs.", link: "https://velodrome.finance" },
+      { name: "Reservoir", category: "Stablecoin", use: "Mint and earn yield on a diversified stablecoin", explanation: "Reservoir issues a stablecoin backed by a mix of real-world and on-chain assets, and it launched as one of Ink's anchor DeFi protocols.", link: "https://reservoir.xyz" },
+      { name: "Superbridge", category: "Bridge", use: "Bridge assets between Ethereum and OP Stack chains", explanation: "Superbridge provides a clean interface over the canonical OP Stack bridges used across Superchain networks.", link: "https://superbridge.app" },
+    ],
+  },
+  {
+    id: "soneium",
+    name: "Soneium",
+    logo: "🎮",
+    tagline: "Sony's Ethereum L2 for entertainment and fandom.",
+    overview:
+      "Soneium is an Ethereum Layer 2 built on the OP Stack by Sony Block Solutions Labs, a joint venture between Sony Group and Startale, with mainnet launching in January 2025. Sony's pitch is to bring blockchain to mainstream entertainment: music, anime, gaming and fan communities, using the distribution and IP of one of the world's largest media companies. It is part of the Optimism Superchain, so it shares standards and bridging infrastructure with other OP Stack chains while running its own ecosystem programs for creators.",
+    chainType: "Layer 2",
+    consensus: "Optimistic Rollup (OP Stack), secured by Ethereum",
+    nativeToken: "ETH",
+    launched: 2025,
+    strengths: ["Backed by Sony's media and IP reach", "Consumer/entertainment focus", "OP Stack/Superchain interoperability", "Full EVM compatibility", "Active creator and incubation programs"],
+    useCases: ["Fan tokens and digital collectibles", "Web3 gaming", "Music and anime IP experiences", "Creator monetization"],
+    dApps: [
+      { name: "Sony Music Soundverse", category: "NFT", use: "Fan collectibles tied to Sony music artists", explanation: "Soundverse uses Soneium to issue artist-backed digital collectibles that connect fans to releases and events.", link: "https://soneium.org" },
+      { name: "Untitled Bank", category: "Lending", use: "Modular lending markets on Soneium", explanation: "Untitled Bank offers isolated lending vaults so depositors can pick exactly which risk they take on, and it is among Soneium's larger DeFi protocols.", link: "https://untitledbank.co" },
+      { name: "Sake Finance", category: "Lending", use: "Borrow, lend, and mint a native stablecoin", explanation: "Sake Finance is a Soneium-native money market that also issues a collateral-backed stablecoin for use across the chain.", link: "https://www.sakefinance.com" },
+      { name: "Kyo Finance", category: "DEX", use: "Concentrated-liquidity trading on Soneium", explanation: "Kyo Finance is a Soneium-native DEX built around concentrated liquidity and vote-directed incentives.", link: "https://www.kyo.finance" },
+      { name: "Superbridge", category: "Bridge", use: "Bridge assets between Ethereum and Soneium", explanation: "Superbridge wraps the canonical OP Stack bridge in a simple interface for moving funds in and out of the chain.", link: "https://superbridge.app" },
+    ],
+  },
+  {
+    id: "x-layer",
+    name: "X Layer",
+    logo: "⚡",
+    tagline: "OKX's zero-knowledge L2 on the Polygon CDK.",
+    overview:
+      "X Layer is an Ethereum Layer 2 operated by the exchange OKX, built with the Polygon CDK as a zkEVM rollup and launched on mainnet in April 2024. It uses zero-knowledge validity proofs, so withdrawals to Ethereum do not need the week-long challenge window that optimistic rollups require. OKB, OKX's exchange token, is the gas token, and the chain is tightly integrated with OKX's exchange and wallet so its large user base can move on-chain with minimal setup.",
+    chainType: "Layer 2",
+    consensus: "ZK Rollup (Polygon CDK zkEVM), secured by Ethereum",
+    nativeToken: "OKB",
+    launched: 2024,
+    strengths: ["Validity proofs mean no long withdrawal delay", "Backed by OKX's exchange and wallet distribution", "EVM-equivalent via zkEVM", "Low transaction fees", "AggLayer interoperability with other CDK chains"],
+    useCases: ["DeFi trading and lending", "Exchange-to-chain onboarding", "Payments", "General EVM dApp deployment"],
+    dApps: [
+      { name: "OKX Wallet", category: "Wallets", use: "Main wallet and exchange gateway for the chain", explanation: "OKX Wallet is built by the exchange that runs X Layer, making it the smoothest way to fund the chain and use its apps.", link: "https://www.okx.com/web3" },
+      { name: "OKX DEX", category: "DEX", use: "Aggregated token swaps across X Layer liquidity", explanation: "OKX DEX aggregates routes from multiple pools so trades get filled at the best available price on the chain.", link: "https://www.okx.com/web3/dex" },
+      { name: "iZUMi Finance", category: "DEX", use: "Concentrated-liquidity DEX and liquidity-as-a-service", explanation: "iZUMi Finance provides programmable liquidity for new chains, and it was one of the first DEXs live on X Layer.", link: "https://izumi.finance" },
+      { name: "Orbiter Finance", category: "Bridge", use: "Fast, low-cost bridging between rollups", explanation: "Orbiter Finance specialises in cheap transfers directly between Layer 2 networks instead of routing through Ethereum.", link: "https://www.orbiter.finance" },
+      { name: "Polygon AggLayer", category: "Infrastructure", use: "Shared proof and interoperability layer for CDK chains", explanation: "The AggLayer aggregates proofs from Polygon CDK chains so they can settle to Ethereum together and pass assets between each other.", link: "https://polygon.technology/agglayer" },
     ],
   },
 ];
