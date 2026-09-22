@@ -4,73 +4,83 @@ import { useTheme } from '../theme';
 import { AppText as Text } from './AppText';
 
 /**
- * Reserved space for the brand logo.
+ * The Web3 Academy brand mark.
  *
- * The artwork isn't in the repo yet, so this renders a neutral placeholder at the
- * exact final dimensions — nothing will shift when the real file lands. To ship the
- * logo: drop it at `assets/logo.png` (and `assets/logo-light.png` if the dark scheme
- * needs a lighter lockup), then set LOGO_SOURCES below. Every screen picks it up.
+ * The artwork is a monogram with no wordmark of its own, so `variant="full"` pairs it
+ * with the app name as type; `variant="mark"` renders the monogram alone.
+ *
+ * Two colourways ship because the brand violet (#5A1CC7) all but vanishes against the
+ * dark canvas (#12101F) — `logo-light.png` is the same art recoloured to the dark
+ * scheme's brightened primary. If the placeholder ever needs to come back (new art in
+ * flight, say), set a source to null and that scheme falls back to a sized placeholder
+ * so nothing shifts.
  */
 const LOGO_SOURCES: { light: ImageSourcePropType | null; dark: ImageSourcePropType | null } = {
-  light: null,
-  dark: null,
+  light: require('../../assets/logo.png'),
+  dark: require('../../assets/logo-light.png'),
 };
+
+/** Intrinsic aspect ratio of the artwork, trimmed of its transparent margin. */
+const MARK_ASPECT = 1024 / 684;
 
 type Variant = 'mark' | 'full';
 
 interface LogoSlotProps {
-  /** 'mark' is the square app icon; 'full' is the horizontal lockup with wordmark. */
+  /** 'mark' is the monogram alone; 'full' adds the "Web3 Academy" wordmark beside it. */
   variant?: Variant;
-  /** Height in px. Width follows the variant's aspect ratio. */
+  /** Height of the monogram in px. The wordmark scales from it. */
   height?: number;
   style?: ViewStyle;
 }
 
-const ASPECT: Record<Variant, number> = { mark: 1, full: 3.4 };
-
 export const LogoSlot: React.FC<LogoSlotProps> = ({ variant = 'mark', height = 56, style }) => {
   const { colors, radius, scheme } = useTheme();
-  const width = height * ASPECT[variant];
   const source = LOGO_SOURCES[scheme] ?? LOGO_SOURCES.light;
+  const width = height * MARK_ASPECT;
 
-  if (source) {
-    return (
-      <Image
-        source={source}
-        style={[{ width, height }, style as StyleProp<ImageStyle>]}
-        resizeMode="contain"
-        accessibilityLabel="Web3 Academy"
-      />
-    );
+  const mark = source ? (
+    <Image
+      source={source}
+      style={{ width, height } as StyleProp<ImageStyle>}
+      resizeMode="contain"
+      accessibilityLabel="Web3 Academy"
+    />
+  ) : (
+    <View
+      style={{
+        width,
+        height,
+        borderRadius: radius.sm,
+        backgroundColor: colors.primaryMuted,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: colors.primary + '33',
+        borderStyle: 'dashed',
+      }}
+      accessibilityLabel="Logo placeholder"
+    >
+      <Text style={{ fontSize: Math.min(height * 0.34, 22), fontWeight: '900', color: colors.primary }}>WA</Text>
+    </View>
+  );
+
+  if (variant === 'mark') {
+    return <View style={style}>{mark}</View>;
   }
 
   return (
-    <View
-      style={[
-        {
-          width,
-          height,
-          borderRadius: variant === 'mark' ? radius.md : radius.sm,
-          backgroundColor: colors.primaryMuted,
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderWidth: 1,
-          borderColor: colors.primary + '33',
-          borderStyle: 'dashed',
-        },
-        style,
-      ]}
-      accessibilityLabel="Logo placeholder"
-    >
+    <View style={[{ flexDirection: 'row', alignItems: 'center' }, style]}>
+      {mark}
       <Text
         style={{
-          fontSize: variant === 'mark' ? Math.min(height * 0.34, 22) : Math.min(height * 0.36, 17),
-          fontWeight: '900',
-          color: colors.primary,
-          letterSpacing: variant === 'mark' ? -0.5 : -0.3,
+          marginLeft: height * 0.22,
+          fontSize: height * 0.46,
+          fontWeight: '800',
+          letterSpacing: -0.5,
+          color: colors.text,
         }}
       >
-        {variant === 'mark' ? 'W3' : 'Web3 Academy'}
+        Web3 Academy
       </Text>
     </View>
   );
