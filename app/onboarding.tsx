@@ -31,7 +31,8 @@ export default function Onboarding() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const [page, setPage] = useState(0);
-  const [width, setWidth] = useState(0);
+  const [size, setSize] = useState({ width: 0, height: 0 });
+  const { width, height } = size;
   const scrollRef = useRef<ScrollView>(null);
 
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -53,44 +54,51 @@ export default function Onboarding() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.background }} onLayout={(e) => setWidth(e.nativeEvent.layout.width)}>
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       <View style={{ alignItems: 'center', paddingTop: insets.top + spacing.xl }}>
         <LogoSlot variant="full" height={44} />
       </View>
 
-      {width > 0 ? (
-        <ScrollView
-          ref={scrollRef}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          onScroll={onScroll}
-          scrollEventThrottle={16}
-          style={{ flex: 1 }}
-        >
-          {SLIDES.map((slide, idx) => (
-            <View
-              key={slide.title}
-              style={{
-                width,
-                paddingHorizontal: spacing.xxl,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <IconTile icon={slide.icon} variant={idx} size={132} style={{ marginBottom: spacing.xxl }} />
-              <Text style={{ ...typography.display, color: colors.text, textAlign: 'center', marginBottom: spacing.sm }}>
-                {slide.title}
-              </Text>
-              <Text style={{ fontSize: 15, color: colors.textMuted, textAlign: 'center', lineHeight: 23 }}>
-                {slide.body}
-              </Text>
-            </View>
-          ))}
-        </ScrollView>
-      ) : (
-        <View style={{ flex: 1 }} />
-      )}
+      {/* The pager is sized from a measured box rather than the window, so each
+          slide is exactly one page wide and fills the height available to it. */}
+      <View
+        style={{ flex: 1 }}
+        onLayout={(e) => setSize({ width: e.nativeEvent.layout.width, height: e.nativeEvent.layout.height })}
+      >
+        {width > 0 ? (
+          <ScrollView
+            ref={scrollRef}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onScroll={onScroll}
+            scrollEventThrottle={16}
+          >
+            {SLIDES.map((slide, idx) => (
+              <View
+                key={slide.title}
+                style={{
+                  width,
+                  height,
+                  paddingHorizontal: spacing.xxl,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <IconTile icon={slide.icon} variant={idx} size={132} style={{ marginBottom: spacing.xxl }} />
+                <Text
+                  style={{ ...typography.display, color: colors.text, textAlign: 'center', marginBottom: spacing.sm }}
+                >
+                  {slide.title}
+                </Text>
+                <Text style={{ fontSize: 15, color: colors.textMuted, textAlign: 'center', lineHeight: 23 }}>
+                  {slide.body}
+                </Text>
+              </View>
+            ))}
+          </ScrollView>
+        ) : null}
+      </View>
 
       <View style={{ paddingHorizontal: spacing.xxl, paddingBottom: insets.bottom + spacing.lg }}>
         <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: spacing.xl }}>
