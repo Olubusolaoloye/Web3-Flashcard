@@ -26,9 +26,8 @@
       "package": "com.web3academy.app",
       "versionCode": 1,
       "adaptiveIcon": {
-        "backgroundColor": "#F6F4FD",
+        "backgroundColor": "#6C3BD9",
         "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false
@@ -48,7 +47,7 @@
           "resizeMode": "contain",
           "backgroundColor": "#F6F4FD",
           "dark": {
-            "image": "./assets/splash-icon.png",
+            "image": "./assets/splash-icon-dark.png",
             "resizeMode": "contain",
             "backgroundColor": "#12101F"
           }
